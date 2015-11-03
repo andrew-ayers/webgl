@@ -4,8 +4,11 @@
 
 <!-- script src="../libs/threex/threex.rendererstats/threex.rendererstats.js"></script -->
 <script src="../libs/threex/threex.proceduralcity/threex.proceduralcity.js"></script>
+<!--script src="../libs/threex/threex.proceduralcity/threex.proceduralcity2.js"></script -->
 
 <script src='../libs/mrdoob/three.js/examples/js/controls/OrbitControls.js'></script>
+<script src='../libs/mrdoob/three.js/examples/js/controls/FirstPersonControls.js'></script>
+<script src='../libs/mrdoob/three.js/examples/js/controls/FlyControls.js'></script>
 
 <body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'>
 <script>
@@ -33,19 +36,27 @@
 	var scene	= new THREE.Scene();
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 3000);
 	camera.position.z = 200;
-	var controls	= new THREE.OrbitControls(camera)
-
+	//var controls	= new THREE.OrbitControls(camera);
+    //var controls = new THREE.FirstPersonControls(camera);
+    var controls = new THREE.FlyControls(camera);
+    controls.movementSpeed = 0.05;
+    controls.rollSpeed = 0.00025;
+    controls.autoForward = true;
+    //controls.lookSpeed = 0.05;
+    /*
+    controls.noFly = true;
+    controls.lookVertical = false;*/
 	//////////////////////////////////////////////////////////////////////////////////
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// add a city
 	var city  = new THREEx.ProceduralCity()
-	scene.add(city)	
-	
-	// add a torus	
+	scene.add(city)
+
+	// add a torus
 	//var geometry	= new THREE.TorusKnotGeometry(0.5-0.12, 0.12);
-	//var material	= new THREE.MeshNormalMaterial(); 
+	//var material	= new THREE.MeshNormalMaterial();
 	//var mesh	= new THREE.Mesh( geometry, material );
 	//scene.add( mesh );
 
@@ -73,25 +84,23 @@
 		camera.lookAt( scene.position )
 	})
 	*/
-	
+
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// handle window resize
-	/*
 	window.addEventListener('resize', function(){
 		renderer.setSize( window.innerWidth, window.innerHeight )
 		camera.aspect	= window.innerWidth / window.innerHeight
-		camera.updateProjectionMatrix()		
+		camera.updateProjectionMatrix()
 	}, false)
-	*/
 
 	// render the scene
 	onRenderFcts.push(function(){
-		renderer.render( scene, camera );		
+		renderer.render( scene, camera );
 	})
-	
+
 	// run the rendering loop
 	var lastTimeMsec = null
 
@@ -102,6 +111,9 @@
 		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
 		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
 		lastTimeMsec	= nowMsec
+
+        controls.update(deltaMsec);
+
 		// call each update function
 		onRenderFcts.forEach(function(onRenderFct){
 			onRenderFct(deltaMsec/1000, nowMsec/1000)
