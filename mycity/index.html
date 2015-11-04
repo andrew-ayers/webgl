@@ -10,6 +10,8 @@
 <script src='../libs/mrdoob/three.js/examples/js/controls/FirstPersonControls.js'></script>
 <script src='../libs/mrdoob/three.js/examples/js/controls/FlyControls.js'></script>
 
+<script src='../libs/threeaa/controls/FlyingControls.js'></script>
+
 <body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'>
 <script>
 	//////////////////////////////////////////////////////////////////////////////////
@@ -38,10 +40,12 @@
 	camera.position.z = 200;
 	//var controls	= new THREE.OrbitControls(camera);
     //var controls = new THREE.FirstPersonControls(camera);
-    var controls = new THREE.FlyControls(camera);
-    controls.movementSpeed = 0.05;
-    controls.rollSpeed = 0.00025;
+    //var controls = new THREE.FlyControls(camera);
+    var controls = new THREEaa.FlyingControls(camera);
+    controls.movementSpeed = 0.015;
+    controls.rollSpeed = 0.0007;
     controls.autoForward = true;
+    controls.trueFlight = true;
     //controls.lookSpeed = 0.05;
     /*
     controls.noFly = true;
