@@ -42,7 +42,7 @@ THREEx.ProceduralCity	= function(){
 		buildingMesh.position.x	= Math.floor( Math.random() * 100 - 50 ) * 5;
 		buildingMesh.position.z	= Math.floor( Math.random() * 100 - 50 ) * 5;
 		// put a random rotation
-		//buildingMesh.rotation.y	= Math.random()*Math.PI*2;
+		buildingMesh.rotation.y	= Math.random()*Math.PI*2;
 		// put a random scale
 		buildingMesh.scale.x	= Math.random() * Math.random() * Math.random() * Math.random() * 50 + 10;
 		buildingMesh.scale.y	= (Math.random() * Math.random() * Math.random() * buildingMesh.scale.x) * 8 + 8;
@@ -50,7 +50,7 @@ THREEx.ProceduralCity	= function(){
 
 		// update the building's transformation
 		buildingMesh.updateMatrix();
-		
+
 		// establish the base color for the buildingMesh
 		var value	= 1 - Math.random() * Math.random();
 		var baseColor	= new THREE.Color().setRGB( value + Math.random() * 0.1, value, value + Math.random() * 0.1 );
@@ -58,7 +58,7 @@ THREEx.ProceduralCity	= function(){
 		var topColor	= baseColor.clone().multiply( light );
 		var bottomColor	= baseColor.clone().multiply( shadow );
 		// set .vertexColors for each face
-		var geometry	= buildingMesh.geometry;		
+		var geometry	= buildingMesh.geometry;
 
 		// set face.vertexColors on roof face
 		geometry.faces[4].vertexColors = [ baseColor, baseColor, baseColor ];
@@ -71,7 +71,7 @@ THREEx.ProceduralCity	= function(){
 				geometry.faces[ j + 1 ].vertexColors = [ bottomColor, bottomColor, topColor ];
 			}
 		}
-		
+
 		buildingMesh.geometry.elementsNeedUpdate = true;
 
 		// merge it with cityGeometry - very important for performance
@@ -88,9 +88,9 @@ THREEx.ProceduralCity	= function(){
 		map		: texture,
 		vertexColors	: THREE.VertexColors
 	});
-	
+
 	var mesh = new THREE.Mesh(cityGeometry, material );
-	
+
 	return mesh
 
 	function generateTextureCanvas(){
